@@ -12,7 +12,7 @@ type Config struct {
 }
 
 type ModuleConfig struct {
-	Lib string `toml:"lib"`
+	Dir string `toml:"modules_dir"`
 }
 
 type ServerConfig struct {
@@ -65,7 +65,7 @@ func (c Config) Validate() error {
 }
 
 func (c ModuleConfig) Validate() error {
-	err := isDir(c.Lib)
+	err := isDir(c.Dir)
 	return err
 }
 

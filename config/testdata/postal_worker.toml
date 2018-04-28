@@ -1,5 +1,5 @@
 [module]
-lib = "/etc/sysconfig/postal_worker.d/lib"
+modules_dir = "/etc/sysconfig/postal_worker.d/modules"
 
 [server]
 host = "0.0.0.0"

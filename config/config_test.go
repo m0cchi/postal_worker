@@ -6,7 +6,7 @@ import (
 )
 
 func TestLoadConfig(t *testing.T) {
-	libPath := "/etc/sysconfig/postal_worker.d/lib"
+	modulesDirPath := "/etc/sysconfig/postal_worker.d/modules"
 	config, err := config.NewConfig("testdata/postal_worker.toml")
 	if err != nil {
 		t.Fatal(err)
@@ -14,11 +14,11 @@ func TestLoadConfig(t *testing.T) {
 
 	err = config.Validate()
 	if err == nil {
-		t.Fatalf("expect: stat %s ~~~~~", libPath)
+		t.Fatalf("expect: stat %s ~~~~~", modulesDirPath)
 	}
 
-	if config.Module.Lib != libPath {
-		t.Fatalf("config.Module.Lib is %v", config.Module.Lib)
+	if config.Module.Dir != modulesDirPath {
+		t.Fatalf("config.Module.Lib is %v", config.Module.Dir)
 	}
 
 	if config.Server.Host != "0.0.0.0" {
