@@ -29,3 +29,10 @@ func TestLoadConfig(t *testing.T) {
 		t.Fatalf("config.Server.Port is %v", config.Server.Port)
 	}
 }
+
+func TestEmpty(t *testing.T) {
+	_, err := config.NewConfig("")
+	if err == nil {
+		t.Fatal("expect: no such file or directory")
+	}
+}
