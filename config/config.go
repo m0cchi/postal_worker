@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/BurntSushi/toml"
 	"os"
 )
@@ -19,13 +20,30 @@ type ServerConfig struct {
 	Port int    `toml:"port"`
 }
 
-func existsFile(path string) error {
-	_, err := os.Stat(path)
-	return err
+func isFile(path string) error {
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
+	if fileInfo.IsDir() {
+		return fmt.Errorf("%s is not FILE", path)
+	}
+	return nil
+}
+
+func isDir(path string) error {
+	fileInfo, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
+	if !fileInfo.IsDir() {
+		return fmt.Errorf("%s is not FILE", path)
+	}
+	return nil
 }
 
 func NewConfig(path string) (*Config, error) {
-	if err := existsFile(path); err != nil {
+	if err := isFile(path); err != nil {
 		return nil, err
 	}
 
@@ -47,7 +65,7 @@ func (c Config) Validate() error {
 }
 
 func (c ModuleConfig) Validate() error {
-	err := existsFile(c.Lib)
+	err := isDir(c.Lib)
 	return err
 }
 
