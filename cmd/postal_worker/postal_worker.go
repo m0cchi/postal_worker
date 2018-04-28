@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/m0cchi/postal_worker/lib/model"
+	"github.com/m0cchi/postal_worker/model"
 	"io/ioutil"
 	"log"
 	"net/http"

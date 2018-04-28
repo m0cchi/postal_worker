@@ -1,7 +1,7 @@
 package module
 
 import (
-	"github.com/m0cchi/postal_worker/lib/model"
+	"github.com/m0cchi/postal_worker/model"
 )
 
 // Module Interface
