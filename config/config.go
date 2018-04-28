@@ -34,9 +34,6 @@ func NewConfig(path string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := config.Validate(); err != nil {
-		return config, err
-	}
 
 	return config, nil
 }

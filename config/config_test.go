@@ -1,9 +1,7 @@
 package config_test
 
 import (
-	"fmt"
 	"github.com/m0cchi/postal_worker/config"
-	"strings"
 	"testing"
 )
 
@@ -11,11 +9,12 @@ func TestLoadConfig(t *testing.T) {
 	libPath := "/etc/sysconfig/postal_worker.d/lib"
 	config, err := config.NewConfig("testdata/postal_worker.toml")
 	if err != nil {
-		message := fmt.Sprintf("%v", err)
-		if !strings.Contains(message, libPath) {
-			fmt.Println(message)
-			t.Fatal(err)
-		}
+		t.Fatal(err)
+	}
+
+	err = config.Validate()
+	if err == nil {
+		t.Fatalf("expect: stat %s ~~~~~", libPath)
 	}
 
 	if config.Module.Lib != libPath {
