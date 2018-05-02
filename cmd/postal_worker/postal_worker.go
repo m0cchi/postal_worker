@@ -63,7 +63,7 @@ func HandleAPI(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func loadModule(modulePath string) error {
+func loadModule(modulePath string, conf *config.Config) error {
 	log.Println("load ", modulePath)
 	p, err := plugin.Open(modulePath)
 	if err != nil {
@@ -76,12 +76,17 @@ func loadModule(modulePath string) error {
 		return err
 	}
 	castM := m.(module.PostalModule)
+	err = castM.Init(conf)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
 	name := castM.GetModuleName()
 	modules[name] = castM
 	return nil
 }
 
-func initModules(modulesDirPath string) error {
+func initModules(modulesDirPath string, conf *config.Config) error {
 	files, err := ioutil.ReadDir(modulesDirPath)
 	if err != nil {
 		return err
@@ -93,7 +98,7 @@ func initModules(modulesDirPath string) error {
 		}
 		if reSoFile.FindString(file.Name()) != "" {
 			modulePath := filepath.Join(modulesDirPath, file.Name())
-			loadModule(modulePath)
+			loadModule(modulePath, conf)
 		}
 	}
 	return nil
@@ -115,7 +120,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = initModules(conf.Module.Dir)
+	err = initModules(conf.Module.Dir, conf)
 	if err != nil {
 		log.Println(err)
 		os.Exit(1)
