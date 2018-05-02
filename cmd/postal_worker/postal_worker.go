@@ -46,7 +46,7 @@ func HandleAPI(w http.ResponseWriter, r *http.Request) {
 	for _, t := range to {
 		m, ok := modules[t.ModuleName]
 		if ok {
-			err := m.Exec(postalMatter, t)
+			err := m.Exec(&postalMatter, &t)
 			if err != nil {
 				http.Error(w, err.Error(), 500)
 				log.Println(err)

@@ -8,6 +8,6 @@ import (
 // Module Interface
 type PostalModule interface {
 	GetModuleName() string
-	Exec(message model.PostalMatter, to model.To) error
+	Exec(message *model.PostalMatter, to *model.To) error
 	Init(conf *config.Config) error
 }
